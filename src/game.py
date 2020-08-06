@@ -10,11 +10,11 @@ cols, rows = (10, 10)
 block_width, block_height = (30, 30)
 
 snake = [(0, 2), (0, 1), (0, 0)]
+prev_direction = SOUTH
 direction = SOUTH
 food = (random.randint(0, cols-1), random.randint(0, rows-1))
 score = 0
 snake_grow = False
-
 
 pygame.init()
 pygame.display.set_caption('Snake (Score: 0)')
@@ -39,13 +39,13 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and direction != SOUTH:
+            if event.key == pygame.K_UP and prev_direction != SOUTH:
                 direction = NORTH
-            elif event.key == pygame.K_DOWN and direction != NORTH:
+            elif event.key == pygame.K_DOWN and prev_direction != NORTH:
                 direction = SOUTH
-            elif event.key == pygame.K_LEFT and direction != EAST:
+            elif event.key == pygame.K_LEFT and prev_direction != EAST:
                 direction = WEST
-            elif event.key == pygame.K_RIGHT and direction != WEST:
+            elif event.key == pygame.K_RIGHT and prev_direction != WEST:
                 direction = EAST
 
         screen.fill((0, 0, 0))
@@ -58,6 +58,7 @@ while not done:
         snake_grow = False
     for i in range(len(snake) - 1, 0, -1):
         snake[i] = snake[i - 1]
+    prev_direction = direction
 
     # Move snake head
     head = snake[0]
