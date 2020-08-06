@@ -13,6 +13,8 @@ snake = [(0, 2), (0, 1), (0, 0)]
 prev_direction = SOUTH
 direction = SOUTH
 food = (random.randint(0, cols-1), random.randint(0, rows-1))
+while food in snake:
+    food = (random.randint(0, cols-1), random.randint(0, rows-1))
 score = 0
 snake_grow = False
 
@@ -20,7 +22,7 @@ pygame.init()
 pygame.display.set_caption('Snake (Score: 0)')
 screen = pygame.display.set_mode((block_width * cols + 27, block_height * rows + 27))
 
-def isDead(snake):
+def isDead():
     #Left, Right, Top, Bottom collision
     if snake[0][0] < 0 or snake[0][0] > cols-1 or snake[0][1] < 0 or snake[0][1] > rows-1:
         return True
@@ -72,16 +74,20 @@ while not done:
         snake[0] = (head[0] + 1, head[1])
     
     #Check death collisions
-    if isDead(snake):
+    if isDead():
         done = True
 
     #Check food collision
     if snake[0][0] == food[0] and snake[0][1] == food[1]:
         score += 1
         food = (random.randint(0, cols-1), random.randint(0, rows-1))
-        snake_grow = True
-    
-    #!!!There r prob gonna b some alignment errors here!!!
+        while food in snake:
+            food = (random.randint(0, cols-1), random.randint(0, rows-1))
+        snake_grow = True        
+    #Iterate for Empty Set then Random on Set
+    #Make ALl points set randomize then check (Remove if part of snake)
+    #Make ALL points set then iterate through snake and remove points on snake
+
     # Draw the Board
     for r in range(rows):
         for c in range(cols):
