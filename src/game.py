@@ -52,8 +52,8 @@ while not done:
             elif event.key == pygame.K_RIGHT and prev_direction != WEST:
                 direction = EAST
 
-        screen.fill((30, 30, 30))
-        pygame.display.flip()
+    screen.fill((30, 30, 30))
+    pygame.display.flip()
 
     # Move snake body
     # Iterate through snake backwards, excluding the head
