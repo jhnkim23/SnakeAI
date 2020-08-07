@@ -6,8 +6,8 @@ NORTH = 1
 EAST = 2
 SOUTH = 3
 WEST = 4
-cols, rows = (10, 10)
-block_width, block_height = (30, 30)
+cols, rows = (15, 15)
+block_size = 30
 
 snake = [(0, 2), (0, 1), (0, 0)]
 prev_direction = SOUTH
@@ -20,9 +20,9 @@ snake_grow = False
 
 pygame.init()
 pygame.display.set_caption('Snake (Score: 0)')
-screen = pygame.display.set_mode((block_width * cols + 27, block_height * rows + 27))
+screen = pygame.display.set_mode(((block_size + 2) * cols, (block_size + 2) * rows))
 
-def isDead():
+def is_dead():
     #Left, Right, Top, Bottom collision
     if snake[0][0] < 0 or snake[0][0] > cols-1 or snake[0][1] < 0 or snake[0][1] > rows-1:
         return True
@@ -33,6 +33,8 @@ def isDead():
             return True
     return False
 
+def draw_rect(color, row, col):
+    pygame.draw.rect(screen, color, (row*(block_size+2)+1, col*(block_size+2)+1, block_size, block_size))
 done = False
 while not done:
     pygame.time.delay(100)
@@ -50,7 +52,7 @@ while not done:
             elif event.key == pygame.K_RIGHT and prev_direction != WEST:
                 direction = EAST
 
-        screen.fill((0, 0, 0))
+        screen.fill((30, 30, 30))
         pygame.display.flip()
 
     # Move snake body
@@ -74,7 +76,7 @@ while not done:
         snake[0] = (head[0] + 1, head[1])
     
     #Check death collisions
-    if isDead():
+    if is_dead():
         done = True
 
     #Check food collision
@@ -88,15 +90,15 @@ while not done:
     #Make ALl points set randomize then check (Remove if part of snake)
     #Make ALL points set then iterate through snake and remove points on snake
 
-    # Draw the Board
+    # Draw the board
     for r in range(rows):
         for c in range(cols):
-            pygame.draw.rect(screen, (255, 255, 255), (r*33, c*33, 30, 30))
-    # Draw the Snake over Board
+            draw_rect((10, 10, 10), r, c)
+    # Draw the Snake over board
     for i in range(len(snake)):
-        pygame.draw.rect(screen, (0, 255, 0),
-                         (snake[i][0]*33, snake[i][1]*33, 30, 30))
-    pygame.draw.rect(screen, (255, 0, 0), (food[0] * 33, food[1]*33,30,30))
+        draw_rect((0, 255, 0), snake[i][0], snake[i][1])
+    # Draw the food over board
+        draw_rect((255, 0, 0), food[0], food[1])
 
     # So we don't show snake out of board
     if not done:
