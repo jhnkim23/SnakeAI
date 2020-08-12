@@ -87,8 +87,8 @@ class SnakeEnv(py_environment.PyEnvironment):
         self._state = self.game.step(action - 1)
         if self.game.done == True or self.reward_total < -10:
             self._episode_ended = True
-            self.reward_total += -10
-            return ts.termination(np.array([self._state], dtype=np.int32), -10)
+            # self.reward_total += -10
+            return ts.termination(np.array([self._state], dtype=np.int32), 0)
         
         if self._state[7] == 1:
             self.reward_total += 1
@@ -123,7 +123,8 @@ if __name__ == '__main__':
                             train_step_counter=train_step_counter)
 
     agent.initialize()
-
+    
+    #Actually running the Model without training
     # Conpute average return
     def compute_avg_return(environment, policy, num_episodes=10):
         total_return = 0.0
@@ -141,9 +142,15 @@ if __name__ == '__main__':
         avg_return = total_return / num_episodes
         return avg_return.numpy()[0]
 
+    #Benchmark value before training
     # Evaluate the agent's policy once before training.
     avg_return = compute_avg_return(env, agent.policy, 5)
     returns = [avg_return]
+
+    #Trajectories
+    #Shows you how you get from timeStep to timeStep
+    #step_type && next_step_type
+    #ts.restart - first | ts.transition - mid | ts.termination - last
 
     #Buffer
     replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(data_spec=agent.collect_data_spec,
@@ -164,7 +171,8 @@ if __name__ == '__main__':
     batch_size = 64
     dataset = replay_buffer.as_dataset(num_parallel_calls=3, 
                                         sample_batch_size=batch_size, 
-                                        num_steps=2).prefetch(3)
+                                        num_steps=2).prefetch(3) #?????? Come back to this in a bit (num_steps)
+    
     iterator = iter(dataset)
     num_iterations = 20000
     env.reset()
