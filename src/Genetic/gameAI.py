@@ -233,5 +233,21 @@ class Snake:
                 state[5] = 1
         
         return state
+    
+    def return_state(self):
+        return_state = [0] * 8
+        return_state[0:3] = [1, 1, 1]
 
+        #Check direction of self.food relative to self.snake head
+        #self.Food is towards the left
+        if self.food[0] > self.snake[0][0]:
+            return_state[3] = 1
+        #self.Food is in front
+        if self.food[1] > self.snake[0][1]:
+            return_state[4] = 1
+        #self.Food is toward the right
+        if self.food[0] < self.snake[0][0]:
+            return_state[5] = 1
+        
+        return return_state
     #pygame.quit()
