@@ -69,7 +69,7 @@ class Snake:
         self.direction = (self.prev_direction+action) % 4
 
         # Initialize state output array
-        state = [0] * 11
+        state = [0] * 8
 
         # Calculate initial distance from snake head to food
         initial_dist_to_food = math.sqrt(
@@ -141,27 +141,21 @@ class Snake:
         if self.direction == self.NORTH:
             # Check if left is empty
             self.snake_copy = self.snake.copy()
-            state[0] = -1
-            while not self.is_dead(self.snake_copy):
-                state[0] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] - 1,
-                                      self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] -
+                                  1, self.snake_copy[0][1])
+            state[0] = 0 if self.is_dead(self.snake_copy) else 1
 
             #Check is front is empty
             self.snake_copy = self.snake.copy()
-            state[1] = -1
-            while not self.is_dead(self.snake_copy):
-                state[1] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] - 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] - 1)
+            state[1] = 0 if self.is_dead(self.snake_copy) else 1
 
             #Check is right is empty
             self.snake_copy = self.snake.copy()
-            state[2] = -1
-            while not self.is_dead(self.snake_copy):
-                state[2] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] + 1,
-                                      self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] +
+                                  1, self.snake_copy[0][1])
+            state[2] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check direction of self.food relative to self.snake head
             # self.Food is towards the left
@@ -177,27 +171,21 @@ class Snake:
         elif self.direction == self.SOUTH:
             # Check if left is empty
             self.snake_copy = self.snake.copy()
-            state[0] = -1
-            while not self.is_dead(self.snake_copy):
-                state[0] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] +
-                                      1, self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] +
+                                  1, self.snake_copy[0][1])
+            state[0] = 0 if self.is_dead(self.snake_copy) else 1
 
             #Check is front is empty
             self.snake_copy = self.snake.copy()
-            state[1] = -1
-            while not self.is_dead(self.snake_copy):
-                state[1] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] + 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] + 1)
+            state[1] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check if right is empty
             self.snake_copy = self.snake.copy()
-            state[2] = -1
-            while not self.is_dead(self.snake_copy):
-                state[2] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] -
-                                      1, self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] -
+                                  1, self.snake_copy[0][1])
+            state[2] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check direction of self.food relative to self.snake head
             # self.Food is towards the left
@@ -213,26 +201,21 @@ class Snake:
         elif self.direction == self.WEST:
             #Check is left is empty
             self.snake_copy = self.snake.copy()
-            state[0] = -1
-            while not self.is_dead(self.snake_copy):
-                state[0] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] + 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] + 1)
+            state[0] = 0 if self.is_dead(self.snake_copy) else 1
+
             # Check if front is empty
             self.snake_copy = self.snake.copy()
-            state[1] = -1
-            while not self.is_dead(self.snake_copy):
-                state[1] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] -
-                                      1, self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] -
+                                  1, self.snake_copy[0][1])
+            state[1] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check if right is empty
             self.snake_copy = self.snake.copy()
-            state[2] = -1
-            while not self.is_dead(self.snake_copy):
-                state[2] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] - 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] - 1)
+            state[2] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check direction of self.food relative to self.snake head
             # self.Food is towards the left
@@ -248,27 +231,21 @@ class Snake:
         else:  # self.EAST
             # Check if left is empty
             self.snake_copy = self.snake.copy()
-            state[0] = -1
-            while not self.is_dead(self.snake_copy):
-                state[0] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] - 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] - 1)
+            state[0] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check if front is empty
             self.snake_copy = self.snake.copy()
-            state[1] = -1
-            while not self.is_dead(self.snake_copy):
-                state[1] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0] +
-                                      1, self.snake_copy[0][1])
+            self.snake_copy[0] = (self.snake_copy[0][0] +
+                                  1, self.snake_copy[0][1])
+            state[1] = 0 if self.is_dead(self.snake_copy) else 1
 
             #Check is right is empty
             self.snake_copy = self.snake.copy()
-            state[2] = -1
-            while not self.is_dead(self.snake_copy):
-                state[2] += 1
-                self.snake_copy[0] = (self.snake_copy[0][0],
-                                      self.snake_copy[0][1] + 1)
+            self.snake_copy[0] = (self.snake_copy[0][0],
+                                  self.snake_copy[0][1] + 1)
+            state[2] = 0 if self.is_dead(self.snake_copy) else 1
 
             # Check direction of self.food relative to snake head
             # self.Food is towards the left
@@ -280,17 +257,12 @@ class Snake:
             # self.Food is toward the right
             if self.food[1] > self.snake[0][1]:
                 state[5] = 1
-        state[0] /= 14
-        state[1] /= 14
-        state[2] /= 14
-        state[8] = 1 if state[0] > 0 else 0
-        state[9] = 1 if state[1] > 0 else 0
-        state[10] = 1 if state[2] > 0 else 0
+
         return state
 
     def return_state(self):
-        return_state = [0] * 11
-        return_state[0:3] = [12/14, 10/14, 1/14]
+        return_state = [0] * 8
+        return_state[0:3] = [1, 1, 1]
 
         # Check direction of self.food relative to self.snake head
         # self.Food is towards the left
@@ -302,7 +274,6 @@ class Snake:
         # self.Food is toward the right
         if self.food[0] < self.snake[0][0]:
             return_state[5] = 1
-        return_state[8:] = [1, 1, 1]
 
         return return_state
     # pygame.quit()
